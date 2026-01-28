@@ -62,7 +62,7 @@ Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`:
 ```json
 {
   "type": "command",
-  "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
+  "command": "python3 ~/.claude/hooks/carl-hook.py"
 }
 ```
 
@@ -74,7 +74,7 @@ If no hooks section exists, create:
     "UserPromptSubmit": [
       {
         "type": "command",
-        "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
+        "command": "python3 ~/.claude/hooks/carl-hook.py"
       }
     ]
   }

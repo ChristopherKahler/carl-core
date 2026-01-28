@@ -31,7 +31,7 @@ Add the hook to your `~/.claude/settings.json`:
     "UserPromptSubmit": [
       {
         "type": "command",
-        "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
+        "command": "python3 ~/.claude/hooks/carl-hook.py"
       }
     ]
   }
