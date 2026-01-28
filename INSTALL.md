@@ -7,10 +7,10 @@
 
 ## Step 1: Copy the Hook Script
 
-Copy `hooks/drl-engine.py` to your Claude hooks directory:
+Copy `hooks/carl-hook.py` to your Claude hooks directory:
 
 ```bash
-cp hooks/drl-engine.py ~/.claude/hooks/drl-engine.py
+cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
 ```
 
 ## Step 2: Initialize Your Workspace
@@ -31,7 +31,7 @@ Add the hook to your `~/.claude/settings.json`:
     "UserPromptSubmit": [
       {
         "type": "command",
-        "command": "python3 ~/.claude/hooks/drl-engine.py \"$PROMPT\" \"$WORKSPACE\""
+        "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
       }
     ]
   }

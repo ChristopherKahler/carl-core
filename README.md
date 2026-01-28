@@ -24,7 +24,7 @@ See [INSTALL.md](INSTALL.md) for step-by-step instructions.
 ```
 carl-core/
 ├── hooks/
-│   └── drl-engine.py           # The main hook script
+│   └── carl-hook.py           # The main hook script
 ├── .carl-template/
 │   ├── manifest                # Configuration file
 │   ├── GLOBAL                  # Universal rules

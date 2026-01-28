@@ -10,8 +10,8 @@ Copy the hook script to the user's Claude hooks directory:
 
 ```bash
 mkdir -p ~/.claude/hooks
-cp hooks/drl-engine.py ~/.claude/hooks/drl-engine.py
-chmod +x ~/.claude/hooks/drl-engine.py
+cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
+chmod +x ~/.claude/hooks/carl-hook.py
 ```
 
 ### 2. Initialize Workspace
@@ -29,7 +29,7 @@ Read the user's `~/.claude/settings.json` file. Add the CARL hook to the `UserPr
 ```json
 {
   "type": "command",
-  "command": "python3 ~/.claude/hooks/drl-engine.py \"$PROMPT\" \"$WORKSPACE\""
+  "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
 }
 ```
 
@@ -41,7 +41,7 @@ If the file doesn't exist or has no hooks section, create it with:
     "UserPromptSubmit": [
       {
         "type": "command",
-        "command": "python3 ~/.claude/hooks/drl-engine.py \"$PROMPT\" \"$WORKSPACE\""
+        "command": "python3 ~/.claude/hooks/carl-hook.py \"$PROMPT\" \"$WORKSPACE\""
       }
     ]
   }
@@ -51,7 +51,7 @@ If the file doesn't exist or has no hooks section, create it with:
 ### 4. Verify
 
 Confirm these files exist:
-- `~/.claude/hooks/drl-engine.py`
+- `~/.claude/hooks/carl-hook.py`
 - `./.carl/manifest`
 - `./.carl/GLOBAL`
 - `./.carl/CONTEXT`
