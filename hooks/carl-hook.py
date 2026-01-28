@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# CARL_HOOK_VERSION=1.0.1
+# CARL_HOOK_VERSION=1.0.2
 """
 CARL - Context Augmentation & Reinforcement Layer
 Smart Injector Hook (v2)
@@ -94,13 +94,48 @@ def save_session_config(carl_path: Path, session_config: dict) -> bool:
         return False
 
 
-def create_session_config(session_id: str, cwd: str) -> dict:
+def get_manifest_domains(carl_path: Path) -> list[str]:
+    """
+    Read manifest and extract all domain names.
+    Returns list of domain names found (e.g., ['GLOBAL', 'DEVELOPMENT', 'PROJECTS']).
+    """
+    domains = []
+    manifest_path = carl_path / 'manifest'
+
+    if not manifest_path.exists():
+        return domains
+
+    try:
+        with open(manifest_path, 'r') as f:
+            for line in f:
+                line = line.strip()
+                if not line or line.startswith('#') or '=' not in line:
+                    continue
+                key = line.split('=', 1)[0].strip()
+                # Extract domain name from keys like DOMAIN_STATE, DOMAIN_ALWAYS_ON
+                if key.endswith('_STATE'):
+                    domain = key[:-6]  # Remove '_STATE'
+                    if domain not in domains:
+                        domains.append(domain)
+    except Exception:
+        pass
+
+    return domains
+
+
+def create_session_config(session_id: str, cwd: str, carl_path: Path) -> dict:
     """
     Create a new session config with default values.
     All overrides default to null (inherit from global).
+    Dynamically builds overrides based on domains in manifest.
     """
     now = datetime.now().isoformat()
     label = Path(cwd).name or "unknown"
+
+    # Build overrides dynamically from manifest domains
+    overrides = {"DEVMODE": None}
+    for domain in get_manifest_domains(carl_path):
+        overrides[f"{domain}_STATE"] = None
 
     return {
         "uuid": session_id,
@@ -110,18 +145,7 @@ def create_session_config(session_id: str, cwd: str) -> dict:
         "title": None,  # User-editable session title
         "prompt_count": 0,  # Track prompts for first-prompt detection
         "last_activity": now,
-        "overrides": {
-            "DEVMODE": None,
-            "GLOBAL_STATE": None,
-            "DEVELOPMENT_STATE": None,
-            "PROJECTS_STATE": None,
-            "DECISIONS_STATE": None,
-            "OBSIDIAN_STATE": None,
-            "CLIENTS_STATE": None,
-            "CONTENT_STATE": None,
-            "BACKLOG_STATE": None,
-            "CLAUDEMD_REINJECT": None
-        }
+        "overrides": overrides
     }
 
 
@@ -356,7 +380,7 @@ def get_or_create_session(carl_path: Path, session_id: str, cwd: str) -> dict | 
         return session_config
 
     # Create new session
-    session_config = create_session_config(session_id, cwd)
+    session_config = create_session_config(session_id, cwd, carl_path)
     save_session_config(carl_path, session_config)
     debug_log(f"Created new session: {session_id}")
 
