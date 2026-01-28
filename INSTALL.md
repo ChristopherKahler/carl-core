@@ -1,33 +1,56 @@
-# CARL Core - Manual Installation
+# CARL Installation Guide
+
+Manual installation for CARL (Context Augmentation & Reinforcement Layer).
 
 ## Prerequisites
 
 - Claude Code CLI installed
-- Python 3.10+ (for the hook script)
+- Python 3.x
 
-## Step 1: Copy the Hook Script
+## Full Installation (All Steps Required)
 
-Copy `hooks/carl-hook.py` to your Claude hooks directory:
+### Step 1: Copy Hook Script
 
 ```bash
+mkdir -p ~/.claude/hooks
 cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
+chmod +x ~/.claude/hooks/carl-hook.py
 ```
 
-## Step 2: Initialize Your Workspace
-
-Copy the `.carl-template` folder to your workspace as `.carl`:
+### Step 2: Copy /carl Command
 
 ```bash
-cp -r .carl-template /path/to/your/workspace/.carl
+mkdir -p ~/.claude/commands
+cp resources/commands/carl.md ~/.claude/commands/carl.md
+cp -r resources/commands/carl ~/.claude/commands/carl
 ```
 
-## Step 3: Wire the Hook
+### Step 3: Copy carl-manager Skill
 
-Add the hook to your `~/.claude/settings.json`.
+```bash
+mkdir -p ~/.claude/skills
+cp -r resources/skills/carl-manager ~/.claude/skills/carl-manager
+```
 
-**IMPORTANT:** Use the absolute path to the hook script. Do not use `~` or environment variables - they may not expand correctly on all platforms.
+### Step 4: Copy CARL Config
 
-Example (replace with actual path):
+**For global install (all projects):**
+```bash
+mkdir -p ~/.carl
+cp -r .carl-template/* ~/.carl/
+```
+
+**For project-specific install:**
+```bash
+cp -r .carl-template ./.carl
+```
+
+### Step 5: Configure Hook in settings.json
+
+Edit `~/.claude/settings.json`.
+
+**CRITICAL:** Use the ABSOLUTE path. Replace `/home/username` with your actual home directory.
+
 ```json
 {
   "hooks": {
@@ -36,7 +59,7 @@ Example (replace with actual path):
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /Users/username/.claude/hooks/carl-hook.py"
+            "command": "python3 /home/username/.claude/hooks/carl-hook.py"
           }
         ]
       }
@@ -45,55 +68,34 @@ Example (replace with actual path):
 }
 ```
 
-If you already have hooks configured, add the CARL hook entry to your existing `UserPromptSubmit` array.
+## Verify Installation
 
-## Step 4: Verify Installation
+All of these must exist:
 
-Start a new Claude Code session in your workspace and check for CARL rules in the context.
-
-## Optional: Install Workflow Resources
-
-The `/carl` command and `carl-manager` skill help you manage domains from within Claude Code.
-
-### Install /carl command
-
-```bash
-mkdir -p ~/.claude/commands
-cp -r resources/commands/carl.md ~/.claude/commands/
-cp -r resources/commands/carl ~/.claude/commands/
+```
+~/.claude/hooks/carl-hook.py
+~/.claude/commands/carl.md
+~/.claude/commands/carl/
+~/.claude/skills/carl-manager/SKILL.md
+~/.claude/settings.json (with hook)
+~/.carl/manifest (or ./.carl/manifest)
 ```
 
-### Install carl-manager skill
+## Usage
 
-```bash
-mkdir -p ~/.claude/skills
-cp -r resources/skills/carl-manager ~/.claude/skills/
-```
+Start a NEW Claude Code session.
 
-Then add to your `~/.claude/settings.json`:
-
-```json
-{
-  "skills": ["~/.claude/skills/carl-manager/SKILL.md"]
-}
-```
-
-## Customization
-
-Edit your `.carl/manifest` to:
-- Enable/disable domains
-- Set `devmode = true` for verbose debug output
-- Add recall keywords to trigger domains contextually
-
-Edit domain files (GLOBAL, CONTEXT, COMMANDS) to customize rules.
+- `/carl` - Manage CARL configuration
+- `*dev` - Enable development mode
+- `*brief` - Concise responses
 
 ## Troubleshooting
 
 **Rules not appearing?**
-- Check that `.carl/manifest` exists in your workspace
-- Verify the hook path in settings.json is correct
-- Try `devmode = true` in manifest for debug output
+- Check `.carl/manifest` exists
+- Verify absolute path in settings.json hook command
+- Set `devmode = true` in manifest for debug output
 
 **Hook errors?**
-- Ensure Python 3.10+ is installed
-- Check file permissions on the hook script
+- Ensure Python 3.x installed and in PATH
+- Check file permissions on hook script

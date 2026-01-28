@@ -1,67 +1,98 @@
-# CARL Core - Claude Code Installation
+# CARL Core - Installation Instructions
 
-You are helping the user install CARL (Context Augmentation & Reinforcement Layer).
+You are helping install CARL (Context Augmentation & Reinforcement Layer).
 
-## First: Ask the User
+## STEP 1: Ask Install Type
 
-Before installing, ask the user:
+Ask the user:
 
 **"How would you like to install CARL?"**
-
-1. **Global** - CARL rules apply to ALL your Claude Code projects
-   - Hook goes to `~/.claude/hooks/`
-   - Config goes to `~/.carl/` (created in home directory)
-
-2. **Project-specific** - CARL rules apply only to THIS workspace
-   - Hook goes to `~/.claude/hooks/` (shared)
-   - Config goes to `./.carl/` (in current workspace)
-
+1. **Global** - Rules apply to ALL Claude Code projects
+2. **Project-specific** - Rules apply only to THIS workspace
 3. **Both** - Global defaults + project overrides
-   - Same as Global, but also creates `./.carl/` in current workspace
-   - Project config takes precedence when present
 
 Wait for their answer before proceeding.
 
 ---
 
-## Installation Steps
+## STEP 2: Determine Paths
 
-### For ALL install types: Copy Hook Script
+Get the user's home directory path. You need the ABSOLUTE path (no `~` or env vars).
+
+- Linux/macOS: typically `/home/username` or `/Users/username`
+- Windows: typically `C:\Users\Username`
+
+Store this as `$HOME_PATH` for the steps below.
+
+---
+
+## STEP 3: Copy Hook Script
 
 ```bash
-mkdir -p ~/.claude/hooks
-cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
-chmod +x ~/.claude/hooks/carl-hook.py
+mkdir -p $HOME_PATH/.claude/hooks
+cp hooks/carl-hook.py $HOME_PATH/.claude/hooks/carl-hook.py
+chmod +x $HOME_PATH/.claude/hooks/carl-hook.py
 ```
 
-### For GLOBAL install:
+**Verify:** File exists at `$HOME_PATH/.claude/hooks/carl-hook.py`
+
+---
+
+## STEP 4: Copy Commands
 
 ```bash
-mkdir -p ~/.carl
-cp -r .carl-template/* ~/.carl/
+mkdir -p $HOME_PATH/.claude/commands
+cp resources/commands/carl.md $HOME_PATH/.claude/commands/carl.md
+cp -r resources/commands/carl $HOME_PATH/.claude/commands/carl
 ```
 
-### For PROJECT-SPECIFIC install:
+**Verify:**
+- File exists: `$HOME_PATH/.claude/commands/carl.md`
+- Folder exists: `$HOME_PATH/.claude/commands/carl/`
 
+---
+
+## STEP 5: Copy Skills
+
+```bash
+mkdir -p $HOME_PATH/.claude/skills
+cp -r resources/skills/carl-manager $HOME_PATH/.claude/skills/carl-manager
+```
+
+**Verify:** Folder exists with SKILL.md: `$HOME_PATH/.claude/skills/carl-manager/SKILL.md`
+
+---
+
+## STEP 6: Copy CARL Config
+
+**For GLOBAL install:**
+```bash
+mkdir -p $HOME_PATH/.carl
+cp -r .carl-template/* $HOME_PATH/.carl/
+```
+
+**For PROJECT-SPECIFIC install:**
 ```bash
 cp -r .carl-template ./.carl
 ```
 
-### For BOTH:
-
+**For BOTH:**
 ```bash
-mkdir -p ~/.carl
-cp -r .carl-template/* ~/.carl/
+mkdir -p $HOME_PATH/.carl
+cp -r .carl-template/* $HOME_PATH/.carl/
 cp -r .carl-template ./.carl
 ```
 
-### Wire the Hook in Settings
+**Verify:** `manifest` file exists in the .carl folder(s)
 
-Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`.
+---
 
-**IMPORTANT:** Use the absolute path to the hook script. Do not use `~` or environment variables - they may not expand correctly on all platforms.
+## STEP 7: Configure Hook in settings.json
 
-Example (replace with actual path):
+Read `$HOME_PATH/.claude/settings.json` (create if doesn't exist).
+
+Add the CARL hook using the **ABSOLUTE PATH**:
+
 ```json
 {
   "hooks": {
@@ -70,7 +101,7 @@ Example (replace with actual path):
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /Users/username/.claude/hooks/carl-hook.py"
+            "command": "python3 $HOME_PATH/.claude/hooks/carl-hook.py"
           }
         ]
       }
@@ -79,27 +110,38 @@ Example (replace with actual path):
 }
 ```
 
-If you already have hooks configured, add the CARL hook entry to your existing `UserPromptSubmit` array.
+**IMPORTANT:** Replace `$HOME_PATH` with the actual absolute path. Do NOT use `~` or environment variables.
 
-## Verify Installation
+If hooks already exist, merge the CARL hook into the existing `UserPromptSubmit` array.
 
-Confirm these files exist based on install type:
+---
 
-**Global:**
-- `~/.claude/hooks/carl-hook.py`
-- `~/.carl/manifest`
+## STEP 8: Final Verification Checklist
 
-**Project-specific:**
-- `~/.claude/hooks/carl-hook.py`
-- `./.carl/manifest`
+Confirm ALL of these exist:
 
-## Success Message
+- [ ] `$HOME_PATH/.claude/hooks/carl-hook.py`
+- [ ] `$HOME_PATH/.claude/commands/carl.md`
+- [ ] `$HOME_PATH/.claude/commands/carl/` (folder with task files)
+- [ ] `$HOME_PATH/.claude/skills/carl-manager/SKILL.md`
+- [ ] `$HOME_PATH/.claude/settings.json` (with hook configured)
+- [ ] `.carl/manifest` (global and/or project-specific based on install type)
 
-"CARL installed! Start a new Claude Code session to activate.
+---
 
-**Quick tips:**
-- `*dev` - Development mode
-- `*brief` - Concise responses
-- `*plan` - Planning mode
-- Edit `.carl/manifest` to customize
-- Set `devmode = true` for debug output"
+## STEP 9: Success Message
+
+Show this message:
+
+```
+CARL installed successfully!
+
+Start a NEW Claude Code session to activate.
+
+Quick commands:
+- /carl - Manage CARL configuration
+- *dev - Enable development mode
+- *brief - Concise responses
+
+Edit .carl/manifest to customize domains and rules.
+```
