@@ -25,6 +25,7 @@ cp -r .carl-template /path/to/your/workspace/.carl
 
 Add the hook to your `~/.claude/settings.json`:
 
+**Linux/macOS:**
 ```json
 {
   "hooks": {
@@ -33,7 +34,25 @@ Add the hook to your `~/.claude/settings.json`:
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ~/.claude/hooks/carl-hook.py"
+            "command": "python3 $HOME/.claude/hooks/carl-hook.py"
+          }
+        ]
+      }
+    ]
+  }
+}
+```
+
+**Windows:**
+```json
+{
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 %USERPROFILE%\\.claude\\hooks\\carl-hook.py"
           }
         ]
       }
