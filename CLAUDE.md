@@ -59,25 +59,9 @@ cp -r .carl-template ./.carl
 
 Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`.
 
-**Linux/macOS:**
-```json
-{
-  "hooks": {
-    "UserPromptSubmit": [
-      {
-        "hooks": [
-          {
-            "type": "command",
-            "command": "python3 $HOME/.claude/hooks/carl-hook.py"
-          }
-        ]
-      }
-    ]
-  }
-}
-```
+**IMPORTANT:** Use the absolute path to the hook script. Do not use `~` or environment variables - they may not expand correctly on all platforms.
 
-**Windows:**
+Example (replace with actual path):
 ```json
 {
   "hooks": {
@@ -86,7 +70,7 @@ Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 %USERPROFILE%\\.claude\\hooks\\carl-hook.py"
+            "command": "python3 /Users/username/.claude/hooks/carl-hook.py"
           }
         ]
       }
