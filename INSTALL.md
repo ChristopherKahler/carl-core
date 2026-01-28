@@ -30,7 +30,6 @@ Add the hook to your `~/.claude/settings.json`:
   "hooks": {
     "UserPromptSubmit": [
       {
-        "matcher": {},
         "hooks": [
           {
             "type": "command",

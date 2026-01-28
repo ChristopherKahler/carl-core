@@ -64,7 +64,6 @@ Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`:
   "hooks": {
     "UserPromptSubmit": [
       {
-        "matcher": {},
         "hooks": [
           {
             "type": "command",
