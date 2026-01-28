@@ -1,12 +1,32 @@
 # CARL Core - Claude Code Installation
 
-You are installing CARL (Context Augmentation & Reinforcement Layer) for the user.
+You are helping the user install CARL (Context Augmentation & Reinforcement Layer).
+
+## First: Ask the User
+
+Before installing, ask the user:
+
+**"How would you like to install CARL?"**
+
+1. **Global** - CARL rules apply to ALL your Claude Code projects
+   - Hook goes to `~/.claude/hooks/`
+   - Config goes to `~/.carl/` (created in home directory)
+
+2. **Project-specific** - CARL rules apply only to THIS workspace
+   - Hook goes to `~/.claude/hooks/` (shared)
+   - Config goes to `./.carl/` (in current workspace)
+
+3. **Both** - Global defaults + project overrides
+   - Same as Global, but also creates `./.carl/` in current workspace
+   - Project config takes precedence when present
+
+Wait for their answer before proceeding.
+
+---
 
 ## Installation Steps
 
-### 1. Copy Hook Script
-
-Copy the hook script to the user's Claude hooks directory:
+### For ALL install types: Copy Hook Script
 
 ```bash
 mkdir -p ~/.claude/hooks
@@ -14,17 +34,30 @@ cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
 chmod +x ~/.claude/hooks/carl-hook.py
 ```
 
-### 2. Initialize Workspace
+### For GLOBAL install:
 
-Copy the `.carl-template` to the current workspace as `.carl`:
+```bash
+mkdir -p ~/.carl
+cp -r .carl-template/* ~/.carl/
+```
+
+### For PROJECT-SPECIFIC install:
 
 ```bash
 cp -r .carl-template ./.carl
 ```
 
-### 3. Wire the Hook in Settings
+### For BOTH:
 
-Read the user's `~/.claude/settings.json` file. Add the CARL hook to the `UserPromptSubmit` hooks array:
+```bash
+mkdir -p ~/.carl
+cp -r .carl-template/* ~/.carl/
+cp -r .carl-template ./.carl
+```
+
+### Wire the Hook in Settings
+
+Read `~/.claude/settings.json`. Add the CARL hook to `UserPromptSubmit`:
 
 ```json
 {
@@ -33,7 +66,7 @@ Read the user's `~/.claude/settings.json` file. Add the CARL hook to the `UserPr
 }
 ```
 
-If the file doesn't exist or has no hooks section, create it with:
+If no hooks section exists, create:
 
 ```json
 {
@@ -48,33 +81,25 @@ If the file doesn't exist or has no hooks section, create it with:
 }
 ```
 
-### 4. Verify
+## Verify Installation
 
-Confirm these files exist:
+Confirm these files exist based on install type:
+
+**Global:**
+- `~/.claude/hooks/carl-hook.py`
+- `~/.carl/manifest`
+
+**Project-specific:**
 - `~/.claude/hooks/carl-hook.py`
 - `./.carl/manifest`
-- `./.carl/GLOBAL`
-- `./.carl/CONTEXT`
-- `./.carl/COMMANDS`
-
-### 5. Optional: Install /carl Command
-
-If the user wants the `/carl` command for managing domains:
-
-```bash
-mkdir -p ~/.claude/commands
-cp resources/commands/carl.md ~/.claude/commands/
-cp -r resources/commands/carl ~/.claude/commands/
-```
 
 ## Success Message
 
-After completing installation, inform the user:
-
-"CARL has been installed! Start a new Claude Code session to activate it. You'll see rule injections in your context automatically.
+"CARL installed! Start a new Claude Code session to activate.
 
 **Quick tips:**
-- Use `*dev` to activate development mode
-- Use `*brief` for concise responses
-- Edit `.carl/manifest` to customize which domains are active
-- Set `devmode = true` in manifest for debug output"
+- `*dev` - Development mode
+- `*brief` - Concise responses
+- `*plan` - Planning mode
+- Edit `.carl/manifest` to customize
+- Set `devmode = true` for debug output"
