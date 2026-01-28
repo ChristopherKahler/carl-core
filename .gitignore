@@ -12,3 +12,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# CARL session files (auto-generated, local to each machine)
+.carl/sessions/*.json

@@ -1,0 +1,35 @@
+# Example Custom Domain
+# =====================
+# Copy this file to create your own domain.
+#
+# Steps:
+#   1. Copy this file: cp example-custom-domain mydomain
+#   2. Rename the rules: MYDOMAIN_RULE_0, MYDOMAIN_RULE_1, etc.
+#   3. Add to manifest:
+#        MYDOMAIN_STATE=active
+#        MYDOMAIN_ALWAYS_ON=false
+#        MYDOMAIN_RECALL=keyword1,keyword2,trigger phrase
+#
+# The domain will load when recall keywords are found in your prompt.
+# Use ALWAYS_ON=true if you want it to load every prompt.
+#
+# Format: {DOMAIN}_RULE_{N}=rule text
+# Rule numbers should be sequential starting from 0.
+
+# ============================================================================
+# EXAMPLE Domain Rules
+# ============================================================================
+EXAMPLE_RULE_0=This is Rule 0 - describe when these rules apply
+EXAMPLE_RULE_1=This is Rule 1 - your first behavioral instruction
+EXAMPLE_RULE_2=This is Rule 2 - another instruction Claude should follow
+EXAMPLE_RULE_3=This is Rule 3 - add as many rules as needed
+# EXAMPLE_RULE_4=Commented rules are ignored
+
+# ============================================================================
+# Tips for writing good rules:
+# ============================================================================
+# - Keep rules actionable and specific
+# - Start with verbs: "Use...", "Check...", "Always...", "Never..."
+# - Rule 0 often describes scope: when/why these rules apply
+# - Use comments (#) for organization and notes
+# - Test your domain by mentioning a recall keyword in your prompt

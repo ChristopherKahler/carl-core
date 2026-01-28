@@ -1,0 +1,16 @@
+# CARL Global Domain
+# ===================
+# Universal rules that apply to all sessions.
+# Keep this lean - domain-specific rules belong in their own files.
+#
+# Format: {DOMAIN}_RULE_{N}=rule text
+
+GLOBAL_RULE_0=GLOBAL rules apply universally. These are foundational behaviors that should never be disabled.
+GLOBAL_RULE_1=Use absolute paths in all programming to prevent path traversal issues
+GLOBAL_RULE_2=Use relative paths when referencing files to the user for clickable navigation
+GLOBAL_RULE_3=Batch tool calls when possible - sequential only when there are dependencies
+GLOBAL_RULE_4=NEVER mark tasks complete without validating functionality - test everything, require proof
+GLOBAL_RULE_5=Read files before editing them - understand existing code before suggesting modifications
+GLOBAL_RULE_6=Prefer editing existing files over creating new ones unless explicitly required
+GLOBAL_RULE_7=Keep changes minimal and focused - only modify what's directly requested
+GLOBAL_RULE_8=Avoid over-engineering - don't add features, abstractions, or improvements beyond what was asked

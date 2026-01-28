@@ -1,0 +1,69 @@
+# CARL Commands Domain
+# =====================
+# Star-commands for common workflows.
+# Activate with *commandname (e.g., *dev, *review, *brief)
+#
+# Format: {COMMAND}_RULE_{N}=rule text
+# Only matched command rules are injected (1:1 mapping)
+
+# ============================================================================
+# *dev - Development mode
+# ============================================================================
+DEV_RULE_0=Code over explanation - show, don't tell
+DEV_RULE_1=Prefer editing existing files over creating new ones
+DEV_RULE_2=Run tests after implementation changes when test suite exists
+DEV_RULE_3=Keep changes minimal - only what's directly requested
+DEV_RULE_4=Avoid over-engineering and premature abstraction
+
+# ============================================================================
+# *review - Code review mode
+# ============================================================================
+REVIEW_RULE_0=Read full file context before suggesting changes
+REVIEW_RULE_1=Flag security concerns explicitly with severity
+REVIEW_RULE_2=Note performance implications of existing patterns
+REVIEW_RULE_3=Suggest improvements but respect existing code style
+REVIEW_RULE_4=Identify potential edge cases and error conditions
+
+# ============================================================================
+# *brief - Concise response mode
+# ============================================================================
+BRIEF_RULE_0=Bullet points only - no prose paragraphs
+BRIEF_RULE_1=Maximum 5 items per response unless more explicitly needed
+BRIEF_RULE_2=Skip explanations unless directly asked
+BRIEF_RULE_3=Use code snippets over descriptions when applicable
+
+# ============================================================================
+# *plan - Planning mode
+# ============================================================================
+PLAN_RULE_0=Explore codebase before proposing changes
+PLAN_RULE_1=Identify all affected files and dependencies
+PLAN_RULE_2=Present options with clear tradeoffs
+PLAN_RULE_3=Get explicit approval before implementing
+PLAN_RULE_4=Break large tasks into discrete steps
+
+# ============================================================================
+# *discuss - Discussion/brainstorm mode
+# ============================================================================
+DISCUSS_RULE_0=Explore multiple approaches before recommending one
+DISCUSS_RULE_1=Ask clarifying questions to understand intent
+DISCUSS_RULE_2=Present pros and cons for each option
+DISCUSS_RULE_3=Avoid jumping to implementation until direction is clear
+DISCUSS_RULE_4=Summarize key decisions made during discussion
+
+# ============================================================================
+# *debug - Debugging mode
+# ============================================================================
+DEBUG_RULE_0=Gather all relevant error context before diagnosing
+DEBUG_RULE_1=Form hypothesis and test systematically
+DEBUG_RULE_2=Check logs, stack traces, and error messages first
+DEBUG_RULE_3=Isolate the problem to smallest reproducible case
+DEBUG_RULE_4=Explain root cause, not just the fix
+
+# ============================================================================
+# *explain - Teaching/explanation mode
+# ============================================================================
+EXPLAIN_RULE_0=Start with high-level overview before details
+EXPLAIN_RULE_1=Use concrete examples to illustrate concepts
+EXPLAIN_RULE_2=Build understanding incrementally - don't overwhelm
+EXPLAIN_RULE_3=Check for understanding before moving to next topic
+EXPLAIN_RULE_4=Relate new concepts to familiar ones when possible

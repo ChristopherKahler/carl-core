@@ -1,0 +1,47 @@
+# CARL Context Domain
+# ====================
+# Dynamic rules based on remaining context window.
+# The hook automatically determines the bracket from token usage.
+#
+# Thresholds:
+#   FRESH:    60-100% remaining - lean injection
+#   MODERATE: 40-60% remaining - reinforce key context
+#   DEPLETED: 25-40% remaining - heavy reinforcement
+#   CRITICAL: <25% remaining - triggers DEPLETED rules + warning
+#
+# Format:
+#   {BRACKET}_RULES=true|false  - Enable/disable bracket
+#   {BRACKET}_RULE_{N}=text     - Individual rules
+
+# Bracket Control Flags
+FRESH_RULES=true
+MODERATE_RULES=true
+DEPLETED_RULES=true
+
+# ============================================================================
+# FRESH Bracket (60-100% remaining)
+# ============================================================================
+FRESH_RULE_0=Context mode: LEAN - minimal injection overhead
+FRESH_RULE_1=Trust recent context for implementation details
+FRESH_RULE_2=Batch operations aggressively - minimize round trips
+FRESH_RULE_3=Work in current context unless task exceeds 500 LOC
+FRESH_RULE_4=Spawn agents only for explicitly parallel work
+
+# ============================================================================
+# MODERATE Bracket (40-60% remaining)
+# ============================================================================
+MODERATE_RULE_0=Context mode: STANDARD - reinforcing key context
+MODERATE_RULE_1=Re-state current task goal if conversation exceeds 5 exchanges
+MODERATE_RULE_2=Re-read requirements before architectural decisions
+MODERATE_RULE_3=Consider spawning agent for tasks expecting >300 LOC
+MODERATE_RULE_4=Summarize approach before implementation
+
+# ============================================================================
+# DEPLETED Bracket (25-40% remaining)
+# ============================================================================
+DEPLETED_RULE_0=Context mode: REINFORCEMENT - heavy injection active
+DEPLETED_RULE_1=Checkpoint progress before any multi-step operation
+DEPLETED_RULE_2=Summarize what's being built before any code generation
+DEPLETED_RULE_3=Surface context warning before accepting complex tasks
+DEPLETED_RULE_4=Prepare handoff summary proactively
+DEPLETED_RULE_5=Recommend fresh session for heavy remaining work

@@ -1,17 +1,38 @@
-# CARL Manifest - Configuration for Context Augmentation & Reinforcement Layer
-# This file controls which domains are active and how they're triggered
+# CARL Manifest
+# ==============
+# Controls which domains are active and how they're triggered.
+#
+# Format:
+#   DEVMODE=true|false                (debug output in responses)
+#   {DOMAIN}_STATE=active|inactive    (whether domain is enabled)
+#   {DOMAIN}_ALWAYS_ON=true|false     (load every prompt, no keyword matching)
+#   {DOMAIN}_RECALL=keyword1,keyword2 (triggers on-demand loading)
+#   {DOMAIN}_EXCLUDE=word1,word2      (skip domain if these words in prompt)
+#
+# Loading Logic:
+#   1. ALWAYS_ON=true domains load every prompt
+#   2. Other active domains load when recall keywords match user prompt
+#   3. Exclusions are checked before matching
 
-[SETTINGS]
-devmode = false
+# ============================================================================
+# SETTINGS
+# ============================================================================
+DEVMODE=false
 
-[GLOBAL]
-state = active
-always_on = true
+# ============================================================================
+# GLOBAL - Universal rules (always loaded)
+# ============================================================================
+GLOBAL_STATE=active
+GLOBAL_ALWAYS_ON=true
 
-[CONTEXT]
-state = active
-always_on = true
+# ============================================================================
+# CONTEXT - Dynamic bracket rules based on context window usage
+# ============================================================================
+CONTEXT_STATE=active
+CONTEXT_ALWAYS_ON=true
 
-[COMMANDS]
-state = active
-recall = *dev, *review, *brief, *plan, *discuss, *debug, *explain
+# ============================================================================
+# COMMANDS - Star-commands like *dev, *review, *brief
+# Detected via *pattern matching, rules in commands file
+# ============================================================================
+COMMANDS_STATE=active

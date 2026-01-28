@@ -26,15 +26,17 @@ carl-core/
 ├── hooks/
 │   └── carl-hook.py           # The main hook script
 ├── .carl-template/
-│   ├── manifest                # Configuration file
-│   ├── GLOBAL                  # Universal rules
-│   ├── CONTEXT                 # Context-aware brackets
-│   └── COMMANDS                # Star-command definitions
-├── resources/                  # Optional workflow tools
-│   ├── commands/carl.md        # /carl command
-│   └── skills/carl-manager/    # Domain management skill
-├── INSTALL.md                  # Manual installation guide
-└── CLAUDE.md                   # Claude Code bootstrap prompt
+│   ├── manifest               # Configuration file
+│   ├── global                 # Universal rules (always loaded)
+│   ├── context                # Context-aware bracket rules
+│   ├── commands               # Star-command definitions
+│   ├── sessions/              # Auto-created for session tracking
+│   └── example-custom-domain  # Template for creating custom domains
+├── resources/                 # Optional workflow tools
+│   ├── commands/carl.md       # /carl command
+│   └── skills/carl-manager/   # Domain management skill
+├── INSTALL.md                 # Manual installation guide
+└── CLAUDE.md                  # Claude Code bootstrap prompt
 ```
 
 ## How It Works
