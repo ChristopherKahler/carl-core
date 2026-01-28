@@ -30,15 +30,20 @@ Add the hook to your `~/.claude/settings.json`:
   "hooks": {
     "UserPromptSubmit": [
       {
-        "type": "command",
-        "command": "python3 ~/.claude/hooks/carl-hook.py"
+        "matcher": {},
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python3 ~/.claude/hooks/carl-hook.py"
+          }
+        ]
       }
     ]
   }
 }
 ```
 
-If you already have hooks configured, add the CARL hook to your existing array.
+If you already have hooks configured, add the CARL hook entry to your existing `UserPromptSubmit` array.
 
 ## Step 4: Verify Installation
 
