@@ -1,0 +1,27 @@
+# CONTEXT Domain - Dynamic rules based on remaining context window
+# The hook automatically determines the bracket based on token usage
+
+[FRESH]
+# Active when context > 60% remaining
+0. Context mode: LEAN - minimal injection overhead
+1. Trust recent context for implementation details
+2. Batch operations aggressively - minimize round trips
+3. Work in current context unless task exceeds 500 LOC
+4. Spawn agents only for explicitly parallel work
+
+[MODERATE]
+# Active when context 30-60% remaining
+0. Context mode: STANDARD - reinforcing key context
+1. Re-state current task goal if conversation exceeds 5 exchanges
+2. Re-read requirements before architectural decisions
+3. Consider spawning agent for tasks expecting >300 LOC
+4. Summarize approach before implementation
+
+[DEPLETED]
+# Active when context < 30% remaining
+0. Context mode: REINFORCEMENT - heavy injection active
+1. Checkpoint progress before any multi-step operation
+2. Summarize what's being built before any code generation
+3. Surface context warning before accepting complex tasks
+4. Prepare handoff summary proactively
+5. Recommend fresh session for heavy remaining work

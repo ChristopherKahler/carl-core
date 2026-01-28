@@ -1,0 +1,13 @@
+# GLOBAL Domain - Universal rules that apply to all sessions
+# These foundational behaviors should never be disabled
+
+[RULES]
+0. GLOBAL rules apply universally. These are foundational behaviors that should never be disabled.
+1. Use absolute paths in all programming to prevent path traversal issues
+2. Use relative paths when referencing files to the user for clickable navigation
+3. Batch tool calls when possible - sequential only when there are dependencies
+4. NEVER mark tasks complete without validating functionality - test everything, require proof
+5. Read files before editing them - understand existing code before suggesting modifications
+6. Prefer editing existing files over creating new ones unless explicitly required
+7. Keep changes minimal and focused - only modify what's directly requested
+8. Avoid over-engineering - don't add features, abstractions, or improvements beyond what was asked

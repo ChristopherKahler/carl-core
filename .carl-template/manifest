@@ -1,0 +1,17 @@
+# CARL Manifest - Configuration for Context Augmentation & Reinforcement Layer
+# This file controls which domains are active and how they're triggered
+
+[SETTINGS]
+devmode = false
+
+[GLOBAL]
+state = active
+always_on = true
+
+[CONTEXT]
+state = active
+always_on = true
+
+[COMMANDS]
+state = active
+recall = *dev, *review, *brief, *plan, *discuss, *debug, *explain
