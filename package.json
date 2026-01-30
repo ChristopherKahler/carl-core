@@ -25,12 +25,12 @@
   "license": "MIT",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ChristopherKahler/carl-core.git"
+    "url": "git+https://github.com/ChristopherKahler/carl.git"
   },
   "bugs": {
-    "url": "https://github.com/ChristopherKahler/carl-core/issues"
+    "url": "https://github.com/ChristopherKahler/carl/issues"
   },
-  "homepage": "https://github.com/ChristopherKahler/carl-core#readme",
+  "homepage": "https://github.com/ChristopherKahler/carl#readme",
   "engines": {
     "node": ">=16.7.0"
   }
