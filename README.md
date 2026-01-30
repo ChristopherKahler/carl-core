@@ -314,7 +314,7 @@ carl-core/
 │   ├── commands              # Star-command definitions
 │   └── context               # Context bracket rules
 └── resources/                # Optional management tools
-    ├── commands/carl.md      # /carl slash command
+    ├── commands/carl/            # /carl:manager and related commands
     └── skills/               # Domain management helpers
 ```
 
