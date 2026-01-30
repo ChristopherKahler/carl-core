@@ -1,21 +1,27 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 320">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 600 300">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&amp;display=swap');
+    </style>
+  </defs>
   <style>
     .bg { fill: #1a1a2e; }
     .header { fill: #16213e; }
     .btn-red { fill: #ff6b6b; }
     .btn-yellow { fill: #ffd93d; }
     .btn-green { fill: #6bcb77; }
-    .text { font-family: 'SF Mono', 'Fira Code', monospace; font-size: 13px; }
+    .text { font-family: 'JetBrains Mono', 'Courier New', monospace; font-size: 13px; }
     .prompt { fill: #888; }
     .command { fill: #f8b500; }
     .output { fill: #e8e8e8; }
     .success { fill: #6bcb77; }
-    .amber { fill: #f8b500; }
+    .amber { fill: #f8b500; font-weight: bold; }
     .dim { fill: #666; }
+    .title { font-size: 11px; }
   </style>
 
   <!-- Window -->
-  <rect class="bg" width="600" height="320" rx="8"/>
+  <rect class="bg" width="600" height="300" rx="8"/>
   <rect class="header" width="600" height="32" rx="8"/>
   <rect class="bg" y="24" width="600" height="8"/>
 
@@ -25,30 +31,38 @@
   <circle class="btn-green" cx="60" cy="16" r="6"/>
 
   <!-- Title -->
-  <text x="300" y="20" text-anchor="middle" class="text dim">Terminal</text>
+  <text x="300" y="20" text-anchor="middle" class="text title dim">Terminal</text>
 
   <!-- Terminal content -->
-  <text x="20" y="60" class="text prompt">$</text>
-  <text x="35" y="60" class="text command">npx carl-core</text>
+  <text x="20" y="58" class="text prompt">$</text>
+  <text x="35" y="58" class="text command">npx carl-core</text>
 
-  <!-- CARL ASCII Art -->
-  <text x="20" y="90" class="text amber">   ██████╗ █████╗ ██████╗ ██╗</text>
-  <text x="20" y="106" class="text amber">  ██╔════╝██╔══██╗██╔══██╗██║</text>
-  <text x="20" y="122" class="text amber">  ██║     ███████║██████╔╝██║</text>
-  <text x="20" y="138" class="text amber">  ██║     ██╔══██║██╔══██╗██║</text>
-  <text x="20" y="154" class="text amber">  ╚██████╗██║  ██║██║  ██║███████╗</text>
-  <text x="20" y="170" class="text amber">   ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝╚══════╝</text>
+  <!-- CARL Logo - Simple block style -->
+  <text x="20" y="88" class="text amber" font-size="28" font-weight="bold">CARL</text>
+  <text x="115" y="88" class="text dim" font-size="13">v1.0.0</text>
 
-  <text x="20" y="195" class="text output">  CARL <tspan class="dim">v1.0.0</tspan></text>
-  <text x="20" y="211" class="text dim">  Context Augmentation &amp; Reinforcement Layer</text>
+  <text x="20" y="108" class="text dim">Context Augmentation &amp; Reinforcement Layer</text>
 
-  <text x="20" y="240" class="text success">  ✓</text>
-  <text x="40" y="240" class="text output">Installed hooks/carl-hook.py</text>
-  <text x="20" y="256" class="text success">  ✓</text>
-  <text x="40" y="256" class="text output">Installed commands/carl</text>
-  <text x="20" y="272" class="text success">  ✓</text>
-  <text x="40" y="272" class="text output">Added hook to settings.json</text>
+  <!-- Divider -->
+  <line x1="20" y1="125" x2="280" y2="125" stroke="#333" stroke-width="1"/>
 
-  <text x="20" y="300" class="text success">  Done!</text>
-  <text x="70" y="300" class="text output">Restart Claude Code to activate.</text>
+  <!-- Install output -->
+  <text x="20" y="150" class="text success">✓</text>
+  <text x="40" y="150" class="text output">Installed hooks/carl-hook.py</text>
+
+  <text x="20" y="172" class="text success">✓</text>
+  <text x="40" y="172" class="text output">Installed commands/carl</text>
+
+  <text x="20" y="194" class="text success">✓</text>
+  <text x="40" y="194" class="text output">Installed skills</text>
+
+  <text x="20" y="216" class="text success">✓</text>
+  <text x="40" y="216" class="text output">Created ~/.carl</text>
+
+  <text x="20" y="238" class="text success">✓</text>
+  <text x="40" y="238" class="text output">Added hook to settings.json</text>
+
+  <!-- Done message -->
+  <text x="20" y="270" class="text success" font-weight="bold">Done!</text>
+  <text x="70" y="270" class="text output">Restart Claude Code to activate.</text>
 </svg>
