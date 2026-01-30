@@ -163,19 +163,21 @@ function wireHook(claudeDir, hookPath) {
     return false;
   });
 
+  // New hook format: { hooks: [{ type, command }] }
+  const newHookEntry = {
+    hooks: [
+      {
+        type: 'command',
+        command: hookCommand
+      }
+    ]
+  };
+
   if (existingIndex !== -1) {
-    // Update existing hook with correct structure
-    settings.hooks.UserPromptSubmit[existingIndex] = {
-      type: 'command',
-      command: hookCommand
-    };
+    settings.hooks.UserPromptSubmit[existingIndex] = newHookEntry;
     console.log(`  ${green}✓${reset} Updated hook in settings.json`);
   } else {
-    // Add new hook with correct structure: { type, command } directly
-    settings.hooks.UserPromptSubmit.push({
-      type: 'command',
-      command: hookCommand
-    });
+    settings.hooks.UserPromptSubmit.push(newHookEntry);
     console.log(`  ${green}✓${reset} Added hook to settings.json`);
   }
 
