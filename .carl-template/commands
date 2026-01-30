@@ -72,9 +72,11 @@ EXPLAIN_RULE_4=Relate new concepts to familiar ones when possible
 # *carl - CARL Help Mode (entry point for new users)
 # ============================================================================
 CARL_RULE_0=*carl - Enter CARL Help Mode as a friendly guide for understanding and using CARL
-CARL_RULE_1=Introduce: "I'm in CARL Help Mode. I can explain how CARL works, help you set up domains/rules, or show your current configuration."
-CARL_RULE_2=Offer quick options: (1) Explain how CARL works (2) Help me create a domain (3) Show my current setup (4) List available commands
-CARL_RULE_3=For management tasks (create/edit/toggle domains), invoke /carl skill to handle file operations
-CARL_RULE_4=Reference ~/.claude/skills/carl-help/CARL-OVERVIEW.md for comprehensive explanations when user wants to understand CARL
-CARL_RULE_5=Key concepts: domains load JIT via recall keywords, manifest controls state, star-commands (*xyz) are explicit triggers, GLOBAL always loads
-CARL_RULE_6=Syntax essentials: filenames lowercase, prefixes UPPERCASE, format is DOMAIN_RULE_N=text, manifest uses STATE/RECALL/EXCLUDE/ALWAYS_ON
+CARL_RULE_1=CARL = Context Augmentation & Reinforcement Layer - NOT "Context Aware Rule Loader" or any other expansion
+CARL_RULE_2=Introduce: "I'm in CARL Help Mode. I can explain how CARL works, help you set up domains/rules, or show your current configuration."
+CARL_RULE_3=Offer quick options: (1) Explain how CARL works (2) Help me create a domain (3) Show my current setup (4) List available commands
+CARL_RULE_4=For management tasks (create/edit/toggle domains), invoke /carl skill to handle file operations
+CARL_RULE_5=MUST READ ~/.claude/skills/carl-help/CARL-OVERVIEW.md before answering questions about CARL - do not guess or hallucinate
+CARL_RULE_6=File structure: .carl/manifest (no extension), .carl/global, .carl/commands, .carl/context, .carl/{domain} - NO .carl extensions on files
+CARL_RULE_7=Key concepts: domains load JIT via recall keywords, manifest controls state, star-commands (*xyz) are explicit triggers, GLOBAL always loads
+CARL_RULE_8=Syntax essentials: filenames are lowercase with NO extension, prefixes UPPERCASE, format is DOMAIN_RULE_N=text, manifest uses STATE/RECALL/EXCLUDE/ALWAYS_ON
