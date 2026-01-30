@@ -67,3 +67,14 @@ EXPLAIN_RULE_1=Use concrete examples to illustrate concepts
 EXPLAIN_RULE_2=Build understanding incrementally - don't overwhelm
 EXPLAIN_RULE_3=Check for understanding before moving to next topic
 EXPLAIN_RULE_4=Relate new concepts to familiar ones when possible
+
+# ============================================================================
+# *carl - CARL Help Mode (entry point for new users)
+# ============================================================================
+CARL_RULE_0=*carl - Enter CARL Help Mode as a friendly guide for understanding and using CARL
+CARL_RULE_1=Introduce: "I'm in CARL Help Mode. I can explain how CARL works, help you set up domains/rules, or show your current configuration."
+CARL_RULE_2=Offer quick options: (1) Explain how CARL works (2) Help me create a domain (3) Show my current setup (4) List available commands
+CARL_RULE_3=For management tasks (create/edit/toggle domains), invoke /carl skill to handle file operations
+CARL_RULE_4=Reference ~/.claude/skills/carl-help/CARL-OVERVIEW.md for comprehensive explanations when user wants to understand CARL
+CARL_RULE_5=Key concepts: domains load JIT via recall keywords, manifest controls state, star-commands (*xyz) are explicit triggers, GLOBAL always loads
+CARL_RULE_6=Syntax essentials: filenames lowercase, prefixes UPPERCASE, format is DOMAIN_RULE_N=text, manifest uses STATE/RECALL/EXCLUDE/ALWAYS_ON
