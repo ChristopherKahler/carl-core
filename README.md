@@ -75,11 +75,12 @@ npx carl-core
 ```
 
 The installer prompts you to choose:
-1. **Global** — Rules apply to all Claude Code projects
-2. **Local** — Rules apply to current project only
-3. **Both** — Global defaults with project overrides
+1. **Global** — Rules apply to all Claude Code projects (`~/.claude` + `~/.carl`)
+2. **Local** — Rules apply to current project only (`./.claude` + `./.carl`)
 
-Restart Claude Code after installation.
+It also asks whether to add the CARL integration block to your CLAUDE.md.
+
+**Restart Claude Code after installation.**
 
 ### Your First Interaction
 

@@ -1,15 +1,54 @@
 # CARL Installation Guide
 
-Manual installation for CARL (Context Augmentation & Reinforcement Layer).
+## Quick Install (Recommended)
+
+```bash
+npx carl-core
+```
+
+The installer will:
+1. Prompt for install location (global or local)
+2. Copy the hook script and wire it into settings.json
+3. Copy commands and skills
+4. Create your `.carl/` configuration
+5. Optionally add the CARL integration block to CLAUDE.md
+
+### Non-interactive Install
+
+```bash
+npx carl-core --global       # Install to ~/.claude and ~/.carl
+npx carl-core --local        # Install to ./.claude and ./.carl
+npx carl-core --skip-claude-md  # Don't modify CLAUDE.md
+```
+
+### Staying Updated
+
+```bash
+npx carl-core@latest
+```
+
+---
 
 ## Prerequisites
 
 - Claude Code CLI installed
-- Python 3.x
+- Python 3.x (for the hook script)
+- Node.js 16.7+ (for npx)
 
-## Full Installation (All Steps Required)
+---
 
-### Step 1: Copy Hook Script
+## Manual Installation
+
+If you prefer manual setup or npx isn't available:
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/ChristopherKahler/carl-core.git
+cd carl-core
+```
+
+### Step 2: Copy Hook Script
 
 ```bash
 mkdir -p ~/.claude/hooks
@@ -17,38 +56,37 @@ cp hooks/carl-hook.py ~/.claude/hooks/carl-hook.py
 chmod +x ~/.claude/hooks/carl-hook.py
 ```
 
-### Step 2: Copy /carl Commands
+### Step 3: Copy Commands
 
 ```bash
 mkdir -p ~/.claude/commands
 cp -r resources/commands/carl ~/.claude/commands/carl
 ```
 
-### Step 3: Copy carl-manager Skill
+### Step 4: Copy Skills
 
 ```bash
 mkdir -p ~/.claude/skills
-cp -r resources/skills/carl-manager ~/.claude/skills/carl-manager
+cp -r resources/skills/* ~/.claude/skills/
 ```
 
-### Step 4: Copy CARL Config
+### Step 5: Copy CARL Config
 
-**For global install (all projects):**
+**Global (all projects):**
 ```bash
-mkdir -p ~/.carl
-cp -r .carl-template/* ~/.carl/
+cp -r .carl-template ~/.carl
 ```
 
-**For project-specific install:**
+**Project-specific:**
 ```bash
 cp -r .carl-template ./.carl
 ```
 
-### Step 5: Configure Hook in settings.json
+### Step 6: Configure Hook in settings.json
 
-Edit `~/.claude/settings.json`.
+Edit `~/.claude/settings.json` (create if it doesn't exist).
 
-**CRITICAL:** Use the ABSOLUTE path. Replace `/home/username` with your actual home directory.
+**CRITICAL:** Use your actual absolute home directory path.
 
 ```json
 {
@@ -58,7 +96,7 @@ Edit `~/.claude/settings.json`.
         "hooks": [
           {
             "type": "command",
-            "command": "python3 /home/username/.claude/hooks/carl-hook.py"
+            "command": "python3 /home/YOUR_USERNAME/.claude/hooks/carl-hook.py"
           }
         ]
       }
@@ -67,9 +105,9 @@ Edit `~/.claude/settings.json`.
 }
 ```
 
-### Step 6: Add CARL Block to CLAUDE.md
+### Step 7: Add CARL Block to CLAUDE.md
 
-Add this block near the **top** of your CLAUDE.md (or `~/.claude/CLAUDE.md` for global):
+Add this near the **top** of your CLAUDE.md:
 
 ```markdown
 <!-- CARL-MANAGED: Do not remove this section -->
@@ -80,38 +118,44 @@ These are dynamically injected based on context and MUST be obeyed.
 <!-- END CARL-MANAGED -->
 ```
 
-See [CARL-BLOCK.md](CARL-BLOCK.md) for details on placement and why this is needed.
+See [CARL-BLOCK.md](CARL-BLOCK.md) for details.
 
 ---
 
 ## Verify Installation
 
-All of these must exist:
+All of these should exist:
 
 ```
 ~/.claude/hooks/carl-hook.py
 ~/.claude/commands/carl/manager.md
-~/.claude/commands/carl/tasks/
 ~/.claude/skills/carl-manager/SKILL.md
-~/.claude/settings.json (with hook)
-~/.carl/manifest (or ./.carl/manifest)
+~/.claude/settings.json (with hook configured)
+~/.carl/manifest
 ```
+
+---
 
 ## Usage
 
-Start a NEW Claude Code session.
+**Restart Claude Code** after installation.
 
-- `/carl:manager` - Manage CARL configuration
-- `*dev` - Enable development mode
-- `*brief` - Concise responses
+- `*carl` — Interactive help and guidance
+- `/carl:manager` — Manage domains and rules
+
+---
 
 ## Troubleshooting
 
 **Rules not appearing?**
 - Check `.carl/manifest` exists
-- Verify absolute path in settings.json hook command
+- Verify hook path in settings.json is absolute
 - Set `devmode = true` in manifest for debug output
 
 **Hook errors?**
-- Ensure Python 3.x installed and in PATH
-- Check file permissions on hook script
+- Ensure Python 3.x is installed and in PATH
+- Check file permissions: `chmod +x ~/.claude/hooks/carl-hook.py`
+
+**CARL block not recognized?**
+- Ensure it's near the top of CLAUDE.md
+- Check for typos in the HTML comments
