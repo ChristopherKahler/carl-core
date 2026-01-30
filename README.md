@@ -19,7 +19,7 @@ npx carl-core
 
 <br>
 
-![CARL Install](assets/terminal.svg?v=2)
+![CARL Install](assets/terminal.svg?v=3)
 
 <br>
 
