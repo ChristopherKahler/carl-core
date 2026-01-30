@@ -186,20 +186,36 @@ function wireHook(claudeDir, hookPath) {
  * Add CARL block to CLAUDE.md
  */
 function addCarlBlock(claudeMdPath) {
-  let content = '';
+  console.log(`  ${dim}Checking: ${claudeMdPath}${reset}`);
 
-  if (fs.existsSync(claudeMdPath)) {
+  let content = '';
+  let fileExists = fs.existsSync(claudeMdPath);
+
+  if (fileExists) {
     content = fs.readFileSync(claudeMdPath, 'utf8');
 
-    // Check if CARL block already exists
-    if (content.includes('<!-- CARL-MANAGED:')) {
+    // Check if CARL block already exists (normalize line endings for cross-platform)
+    const normalizedContent = content.replace(/\r\n/g, '\n');
+    if (normalizedContent.includes('<!-- CARL-MANAGED:')) {
       console.log(`  ${dim}CARL block already in CLAUDE.md${reset}`);
       return false;
     }
+    console.log(`  ${dim}Existing CLAUDE.md found (${content.length} bytes), adding CARL block${reset}`);
+  } else {
+    console.log(`  ${dim}No CLAUDE.md found, creating with CARL block${reset}`);
+    // Ensure parent directory exists
+    const parentDir = path.dirname(claudeMdPath);
+    if (!fs.existsSync(parentDir)) {
+      fs.mkdirSync(parentDir, { recursive: true });
+    }
+    // Create minimal CLAUDE.md with CARL block
+    content = `# Claude Code Configuration\n\n${CARL_BLOCK}\n`;
+    fs.writeFileSync(claudeMdPath, content);
+    return true;
   }
 
   // Find insertion point (after first heading or at top)
-  const lines = content.split('\n');
+  const lines = content.split(/\r?\n/);  // Handle both Windows and Unix line endings
   let insertIndex = 0;
 
   // Skip to after first heading and its description
