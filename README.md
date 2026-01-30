@@ -4,9 +4,10 @@
 
 **Context Augmentation & Reinforcement Layer** — Dynamic rules for Claude Code.
 
-[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
-<!-- TODO: Uncomment when published
 [![npm version](https://img.shields.io/npm/v/carl-core?style=for-the-badge&logo=npm&logoColor=white&color=CB3837)](https://www.npmjs.com/package/carl-core)
+[![License](https://img.shields.io/badge/license-MIT-blue?style=for-the-badge)](LICENSE)
+<!-- TODO: Uncomment when repo is public
+[![GitHub stars](https://img.shields.io/github/stars/ChristopherKahler/carl-core?style=for-the-badge&logo=github&color=181717)](https://github.com/ChristopherKahler/carl-core)
 -->
 
 <br>
