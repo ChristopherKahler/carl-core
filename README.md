@@ -19,6 +19,10 @@ npx carl-core
 
 <br>
 
+![CARL Install](assets/terminal.svg)
+
+<br>
+
 *"Rules that load when relevant, disappear when not."*
 
 <br>

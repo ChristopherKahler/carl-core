@@ -1,0 +1,37 @@
+{
+  "name": "carl-core",
+  "version": "1.0.0",
+  "description": "Context Augmentation & Reinforcement Layer - Dynamic rules for Claude Code",
+  "bin": {
+    "carl-core": "bin/install.js"
+  },
+  "files": [
+    "bin",
+    "hooks",
+    "resources",
+    ".carl-template"
+  ],
+  "keywords": [
+    "claude",
+    "claude-code",
+    "ai",
+    "rules",
+    "context",
+    "carl",
+    "dynamic-rules",
+    "prompt-engineering"
+  ],
+  "author": "Chris Kahler",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ChristopherKahler/carl-core.git"
+  },
+  "bugs": {
+    "url": "https://github.com/ChristopherKahler/carl-core/issues"
+  },
+  "homepage": "https://github.com/ChristopherKahler/carl-core#readme",
+  "engines": {
+    "node": ">=16.7.0"
+  }
+}
