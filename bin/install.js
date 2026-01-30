@@ -150,30 +150,31 @@ function wireHook(claudeDir, hookPath) {
     settings.hooks.UserPromptSubmit = [];
   }
 
-  // Check if CARL hook already exists
-  const hookCommand = `python3 ${hookPath}`;
-  const existingHook = settings.hooks.UserPromptSubmit.find(
-    h => h.hooks && h.hooks.some(inner => inner.command && inner.command.includes('carl-hook.py'))
-  );
+  // Normalize path to use forward slashes (works on all platforms)
+  const normalizedPath = hookPath.replace(/\\/g, '/');
+  const hookCommand = `python3 ${normalizedPath}`;
 
-  if (existingHook) {
-    // Update existing hook path
-    existingHook.hooks = existingHook.hooks.map(inner => {
-      if (inner.command && inner.command.includes('carl-hook.py')) {
-        return { ...inner, command: hookCommand };
-      }
-      return inner;
-    });
+  // Check if CARL hook already exists (check both structures: {type,command} and {hooks:[...]})
+  const existingIndex = settings.hooks.UserPromptSubmit.findIndex(h => {
+    // Direct structure: { type, command }
+    if (h.command && h.command.includes('carl-hook.py')) return true;
+    // Nested structure: { hooks: [{ type, command }] }
+    if (h.hooks && h.hooks.some(inner => inner.command && inner.command.includes('carl-hook.py'))) return true;
+    return false;
+  });
+
+  if (existingIndex !== -1) {
+    // Update existing hook with correct structure
+    settings.hooks.UserPromptSubmit[existingIndex] = {
+      type: 'command',
+      command: hookCommand
+    };
     console.log(`  ${green}✓${reset} Updated hook in settings.json`);
   } else {
-    // Add new hook
+    // Add new hook with correct structure: { type, command } directly
     settings.hooks.UserPromptSubmit.push({
-      hooks: [
-        {
-          type: 'command',
-          command: hookCommand
-        }
-      ]
+      type: 'command',
+      command: hookCommand
     });
     console.log(`  ${green}✓${reset} Added hook to settings.json`);
   }
