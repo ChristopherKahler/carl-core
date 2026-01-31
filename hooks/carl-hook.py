@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-# CARL_HOOK_VERSION=1.0.2
+# CARL_HOOK_VERSION=1.0.3
 """
 CARL - Context Augmentation & Reinforcement Layer
 Smart Injector Hook (v2)
@@ -33,11 +33,37 @@ MAX_CONTEXT = 200000
 STALE_SESSION_HOURS = 24  # Cleanup sessions older than this
 DEBUG = False  # Set to True to log to stderr
 
+# Context deduplication: only emit full rules when context signature changes
+# This prevents session file bloat from repeated saved_hook_context entries
+ENABLE_CONTEXT_DEDUP = True
+FORCE_EMIT_EVERY_N = 10  # Force full emit every N prompts even if unchanged
+
 
 def debug_log(msg: str):
     """Log debug messages to stderr."""
     if DEBUG:
         print(f"[CARL] {msg}", file=sys.stderr)
+
+
+def compute_context_signature(
+    bracket: str,
+    devmode: bool,
+    always_on_domains: list[str],
+    matched_domains: list[str],
+    command_names: list[str]
+) -> str:
+    """
+    Compute a signature of the context state for deduplication.
+    Returns a string that changes when the context meaningfully changes.
+    """
+    parts = [
+        f"b:{bracket}",
+        f"d:{devmode}",
+        f"a:{','.join(sorted(always_on_domains))}",
+        f"m:{','.join(sorted(matched_domains))}",
+        f"c:{','.join(sorted(command_names))}"
+    ]
+    return "|".join(parts)
 
 
 # =============================================================================
@@ -145,7 +171,8 @@ def create_session_config(session_id: str, cwd: str, carl_path: Path) -> dict:
         "title": None,  # User-editable session title
         "prompt_count": 0,  # Track prompts for first-prompt detection
         "last_activity": now,
-        "overrides": overrides
+        "overrides": overrides,
+        "last_context_signature": None  # For context deduplication
     }
 
 
@@ -1039,32 +1066,64 @@ def main():
     # Build set of domain files that exist (lowercase for matching)
     domains_with_files = {name.lower() for name in carl_files.keys() if name != 'manifest' and name != 'context'}
 
-    # Format output
-    context = format_output(
-        domains,
-        always_on_rules,
-        matched_rules,
-        matched_keywords,
-        excluded_domains,
-        global_excluded,
-        devmode,
+    # Context deduplication: compute signature and check if changed
+    current_signature = compute_context_signature(
         bracket,
-        context_remaining,
-        bracket_rules_list,
-        command_rules,
-        global_disabled,
-        domains_with_files,
-        context_enabled
+        devmode,
+        list(always_on_rules.keys()),
+        list(matched_rules.keys()),
+        list(command_rules.keys())
     )
 
-    output = {
-        "hookSpecificOutput": {
-            "hookEventName": "UserPromptSubmit",
-            "additionalContext": context
-        }
-    }
+    # Get prompt count and last signature from session
+    prompt_count = session_config.get('prompt_count', 1) if session_config else 1
+    last_signature = session_config.get('last_context_signature') if session_config else None
 
-    print(json.dumps(output))
+    # Determine if we should emit full context
+    should_emit_full = True
+    if ENABLE_CONTEXT_DEDUP and session_config:
+        signature_changed = (current_signature != last_signature)
+        force_emit = (prompt_count % FORCE_EMIT_EVERY_N == 0)
+        first_prompt = (prompt_count <= 1)
+
+        if not signature_changed and not force_emit and not first_prompt:
+            should_emit_full = False
+            debug_log(f"Context unchanged, skipping full emit (prompt {prompt_count})")
+        else:
+            # Update signature in session config
+            session_config['last_context_signature'] = current_signature
+            save_session_config(carl_path, session_config)
+            debug_log(f"Context changed or forced emit (prompt {prompt_count})")
+
+    if should_emit_full:
+        # Format full output
+        context = format_output(
+            domains,
+            always_on_rules,
+            matched_rules,
+            matched_keywords,
+            excluded_domains,
+            global_excluded,
+            devmode,
+            bracket,
+            context_remaining,
+            bracket_rules_list,
+            command_rules,
+            global_disabled,
+            domains_with_files,
+            context_enabled
+        )
+
+        output = {
+            "hookSpecificOutput": {
+                "hookEventName": "UserPromptSubmit",
+                "additionalContext": context
+            }
+        }
+
+        print(json.dumps(output))
+    # else: emit nothing - Claude Code won't save a hook context entry
+
     sys.exit(0)
 
 
